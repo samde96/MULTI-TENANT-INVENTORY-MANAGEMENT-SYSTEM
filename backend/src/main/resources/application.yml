@@ -1,0 +1,47 @@
+spring:
+  config:
+    import: optional:file:../.env[.properties],optional:file:.env[.properties]
+  application:
+    name: keen-erp
+  datasource:
+    url: jdbc:h2:mem:keen_erp;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-minutes: 480
+
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  bootstrap-demo-data: ${BOOTSTRAP_DEMO_DATA:false}
+  bootstrap-initial-admin: ${BOOTSTRAP_INITIAL_ADMIN:false}
+  upload-dir: ${APP_UPLOAD_DIR:uploads}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
